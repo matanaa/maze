@@ -36,8 +36,8 @@ public class mazeAdapter implements Searchable<Position> {
 			Position pos = new Position(s.getValue());
 			pos.changeByDirection(d);
 			 State<Position> newState= adaptPosition(pos);
-			 newState.setCameFrom(s);
-			 newState.setCost(s.getCost()+newState.getCost());
+			 //newState.setCameFrom(s);
+			 //newState.setCost(s.getCost()+newState.getCost());
 			 posList.add(newState);
 		 }
 		 

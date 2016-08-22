@@ -200,22 +200,22 @@ public class Maze3d {
 	public Direction[] getPossibleMoves(Position p) {
 		List <Direction> directions = new ArrayList<Direction>();
 	//System.out.println(p);
-			if (isInMaze(new Position(p.x+1,p.y, p.z))&& getValue(p.z,p.y, p.x+1)==Maze3d.FREE){
+			if (isInMaze(new Position(p.z,p.y,p.x+1 ))&& getValue(p.z,p.y, p.x+1)==Maze3d.FREE){
 				directions.add(Direction.Right);
 			}
-			if (isInMaze(new Position( p.x-1, p.y,p.z))&& getValue(p.z,p.y, p.x-1)==Maze3d.FREE){
+			if (isInMaze(new Position( p.z, p.y,p.x-1))&& getValue(p.z,p.y, p.x-1)==Maze3d.FREE){
 				directions.add(Direction.Left);
 			}
-			if (isInMaze(new Position( p.x, p.y+1,p.z))&& getValue(p.z,p.y+1, p.x)==Maze3d.FREE){
+			if (isInMaze(new Position( p.z, p.y+1,p.x))&& getValue(p.z,p.y+1, p.x)==Maze3d.FREE){
 				directions.add(Direction.Forward);
 			}
-			if (isInMaze(new Position(p.x, p.y-1,p.z ))&& getValue(p.z,p.y-1, p.x)==Maze3d.FREE){
+			if (isInMaze(new Position(p.z, p.y-1, p.x))&& getValue(p.z,p.y-1, p.x)==Maze3d.FREE){
 				directions.add(Direction.Backward);
 			}
-			if (isInMaze(new Position( p.x, p.y,p.z+1))&& getValue(p.z+1,p.y, p.x)==Maze3d.FREE){
+			if (isInMaze(new Position(p.z+1, p.y, p.x))&& getValue(p.z+1,p.y, p.x)==Maze3d.FREE){
 				directions.add(Direction.Up);
 			}
-			if (isInMaze(new Position(p.x, p.y,p.z-1 ))&& getValue(p.z-1,p.y, p.x)==Maze3d.FREE){
+			if (isInMaze(new Position(p.z-1, p.y,p.x))&& getValue(p.z-1,p.y, p.x)==Maze3d.FREE){
 				directions.add(Direction.Down);
 			}
 

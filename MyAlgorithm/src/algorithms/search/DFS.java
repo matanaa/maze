@@ -1,14 +1,16 @@
 
 package algorithms.search;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DFS<T> extends CommonSearcher<T> {
 
+	List<State<T>> beenthere=new ArrayList<State<T>>();
 	@Override
 	public Solution<T> search(Searchable<T> s) {
 		State<T> now = s.getStartState();
-		now.setCameFrom(s.getGoalState());
+beenthere.add(now);
 		doDfs(now, s);
 		return  backTrace(s.getGoalState());
 	}
@@ -18,16 +20,17 @@ public class DFS<T> extends CommonSearcher<T> {
 	protected boolean doDfs(State<T> now,Searchable<T> s){
 		
 		if (now.equals(s.getGoalState())){
+			State<T> start = s.getGoalState();
+			start.setCameFrom(now.getCameFrom());
 			return true;
 		}
 		
 		List<State<T>> neighbors = s.getAllPossibleStates(now);
 		
-	//	for (State<T> neighbor : neighbors) {
-		for(int i=0;i<neighbors.size();i++){
-			State<T> neighbor =neighbors.get(i);
-			if (neighbor.getCameFrom()==null && !neighbor.equals(s.getStartState()) ) {
+		for (State<T> neighbor : neighbors) {
+			if (!beenthere.contains(neighbor) && !neighbor.equals(s.getStartState()) ) {
 				neighbor.setCameFrom(now);
+				beenthere.add(neighbor);
 				if (doDfs(neighbor, s))
 				{
 					return true;

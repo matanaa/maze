@@ -9,21 +9,24 @@ import algorithms.mazeGenerators.Position;
 public class mazeAdapter implements Searchable<Position> {
 
 	protected  Maze3d maze =null;
-	
+	State<Position> startState=null;
+	State<Position> goalState=null;
 	public mazeAdapter(Maze3d maze) {
 		this.maze=maze;
+		this.startState=this.adaptPosition(maze.getStartPosition());
+		this.goalState=this.adaptPosition(maze.getGoalPosition());
 
 	}
 
 	@Override
 	public State<Position> getStartState() {
 		
-		return this.adaptPosition(maze.getStartPosition());
+		return this.startState;
 	}
 
 	@Override
 	public State<Position> getGoalState() {	
-		return this.adaptPosition(maze.getGoalPosition());
+		return this.goalState;
 
 	}
 

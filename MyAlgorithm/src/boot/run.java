@@ -16,9 +16,9 @@ public class run {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		SimpleMaze3dGenerator mg =new SimpleMaze3dGenerator();
+		GrowingTreeGenerator mg =new GrowingTreeGenerator();
 		Maze3d maze = mg.generate(10, 10, 10);
-		System.out.println(maze);
+		System.out.println(maze.getStartPosition().toString() +' '+maze.getGoalPosition().toString());
 		BFS<Position> sh =new BFS<Position>();
 		Solution<Position> ans= sh.search(new mazeAdapter(maze));
 		System.out.println( ans.toString());

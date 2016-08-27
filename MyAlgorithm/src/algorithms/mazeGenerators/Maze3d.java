@@ -120,9 +120,17 @@ public class Maze3d {
 		StringBuilder sb = new StringBuilder();
 		for (int z=0;z<this.floors;z++)
 		{
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				sb.append(maze[z][i][j] + " ");
+		for (int y = 0; y < rows; y++) {
+			for (int x = 0; x < cols; x++) {
+				if (z==startPosition.z && y==startPosition.y && x==startPosition.x){
+					sb.append( "E ");
+				}
+				else if (z==goalPosition.z && y==goalPosition.y && x==goalPosition.x){
+					sb.append( "X ");
+				}
+				else{
+				sb.append(maze[z][y][x] + " ");
+				}
 			}
 			sb.append("\n");
 		}
@@ -200,19 +208,19 @@ public class Maze3d {
 	public Direction[] getPossibleMoves(Position p) {
 		List <Direction> directions = new ArrayList<Direction>();
 	//System.out.println(p);
-			if (isInMaze(new Position(p.z,p.y,p.x+1 ))&& getValue(p.z,p.y, p.x+1)==Maze3d.FREE){
+			if (isInMaze(new Position(p.x+1,p.y,p.z ))&& getValue(p.z,p.y, p.x+1)==Maze3d.FREE){
 				directions.add(Direction.Right);
 			}
-			if (isInMaze(new Position( p.z, p.y,p.x-1))&& getValue(p.z,p.y, p.x-1)==Maze3d.FREE){
+			if (isInMaze(new Position( p.x-1, p.y,p.z))&& getValue(p.z,p.y, p.x-1)==Maze3d.FREE){
 				directions.add(Direction.Left);
 			}
-			if (isInMaze(new Position( p.z, p.y+1,p.x))&& getValue(p.z,p.y+1, p.x)==Maze3d.FREE){
+			if (isInMaze(new Position(p.x , p.y+1,p.z))&& getValue(p.z,p.y+1, p.x)==Maze3d.FREE){
 				directions.add(Direction.Forward);
 			}
-			if (isInMaze(new Position(p.z, p.y-1, p.x))&& getValue(p.z,p.y-1, p.x)==Maze3d.FREE){
+			if (isInMaze(new Position( p.x, p.y-1, p.z))&& getValue(p.z,p.y-1, p.x)==Maze3d.FREE){
 				directions.add(Direction.Backward);
 			}
-			if (isInMaze(new Position(p.z+1, p.y, p.x))&& getValue(p.z+1,p.y, p.x)==Maze3d.FREE){
+			if (isInMaze(new Position(p.x, p.y,p.z+1 ))&& getValue(p.z+1,p.y, p.x)==Maze3d.FREE){
 				directions.add(Direction.Up);
 			}
 			if (isInMaze(new Position(p.z-1, p.y,p.x))&& getValue(p.z-1,p.y, p.x)==Maze3d.FREE){

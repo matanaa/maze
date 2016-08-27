@@ -1,10 +1,12 @@
-package algorithms.search;
+package algorrithm.demo;
 
 import java.util.ArrayList;
 
 import algorithms.mazeGenerators.Direction;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
+import algorithms.search.Searchable;
+import algorithms.search.State;
 
 public class mazeAdapter implements Searchable<Position> {
 

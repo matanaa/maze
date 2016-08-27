@@ -14,7 +14,7 @@ public class Demo {
 		Maze3d maze = mg.generate(6, 5, 5);
 		System.out.println(maze);
 		
-		System.out.println("start point :" +maze.getStartPosition().toString() + " stop point :"+maze.getGoalPosition().toString());
+		System.out.println("start point :" +maze.getStartPosition().toString() + "stop point"  + maze.getGoalPosition().toString());
 		BFS<Position> sh =new BFS<Position>();
 		Solution<Position> ans= sh.search(new mazeAdapter(maze));
 		System.out.println("bfs:"+ ans);

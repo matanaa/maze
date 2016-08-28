@@ -4,7 +4,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The Class Maze3d.
+ *
+ * @author matan
+ */
 public class Maze3d {
+	
+	/**
+	 * 
+	 */
 	private int[][][] maze;
 	private int floors;
 	private int rows;
@@ -13,11 +22,14 @@ public class Maze3d {
 	private Position goalPosition;
 	public static final int FREE = 0;
 	public static final int WALL = 1;
-	/**
-	 * @return the maze
-	 */
+
 	
 	public Maze3d(int floor,int rows, int cols) {
+		/**
+		 * this function will create new 3d instance 
+		 * 
+		 * @return the maze
+		 */
 		this.floors=floor;
 		this.rows=rows;
 		this.cols=cols;
@@ -26,29 +38,42 @@ public class Maze3d {
 	}
 	
 
+	/**
+	 * Set free space.
+	 *
+	 * @param z the z
+	 * @param x the x
+	 * @param y the y
+	 */
 	public void setFree(int z,int x, int y) {
 		maze[z][y][x] = FREE;
 	}
 	
+	/**
+	 * Gets the maze.
+	 *
+	 * @return the maze
+	 */
 	public int[][][] getMaze() {
 		return maze;
 	}
+
 	/**
-	 * @return the floors
+	 * @return the floors count
 	 */
 	public int getFloors() {
 		return floors;
 	}
 
 	/**
-	 * @return the rows
+	 * @return the rows count
 	 */
 	public int getRows() {
 		return rows;
 	}
 
 	/**
-	 * @return the cols
+	 * @return the cols count
 	 */
 	public int getCols() {
 		return cols;
@@ -81,6 +106,12 @@ public class Maze3d {
 	}
 
 
+	/**
+	 * @param z
+	 * @param y
+	 * @param x
+	 * @return the value in the maze 
+	 */
 	public int getValue(int z, int y, int x) {
 		// TODO Auto-generated method stub
 		return maze[z][y][x];
@@ -94,6 +125,10 @@ public class Maze3d {
 		this.fillIn(WALL);
 	}
 	
+	/**
+	 * this function fill the maze with FREE/WALLS
+	 * @param dir FREE/WALL
+	 */
 	protected void fillIn(int dir){
 		for (int z=0;z<this.floors;z++)
 		{
@@ -109,6 +144,9 @@ public class Maze3d {
 		}
 		
 	}
+	/**
+	 * @return the total cells
+	 */
 	public int getTotalCells(){
 		return this.floors*this.rows*this.cols;
 	}
@@ -139,12 +177,20 @@ public class Maze3d {
 		return sb.toString();
 	}
 
-
+	/**
+	 * This method Initialize one maze cells to be FREE
+	 */
 	public void setFree(Position p) {
 		maze[p.z][p.y][p.x] = FREE;
 		
 	}
 	
+	/**
+	 * Checks if is in maze.
+	 *
+	 * @param pos the checking position
+	 * @return true, if is in maze
+	 */
 	public boolean isInMaze(Position pos)
 	{
 		if (pos==null)
@@ -154,6 +200,13 @@ public class Maze3d {
 				&& pos.x>=0 && pos.x<this.cols 
 				&& pos.y>=0 && pos.y<this.rows);
 	}
+	
+	/**
+	 * Gets the cross section by X.
+	 *
+	 * @param x the x
+	 * @return the cross section by X
+	 */
 	public int[][] getCrossSectionByX(int x){
 		  if (!(x>=0 && x<this.cols)){
 			  throw new IndexOutOfBoundsException();
@@ -170,6 +223,13 @@ public class Maze3d {
 		}
 		return maze2d;
 	}
+	
+	/**
+	 * Gets the cross section by Y.
+	 *
+	 * @param y the y
+	 * @return the cross section by Y
+	 */
 	public int[][] getCrossSectionByY(int y){
 	  if (!(y>=0 && y<this.rows)){
 		  throw new IndexOutOfBoundsException();
@@ -185,6 +245,13 @@ public class Maze3d {
 		}
 		return maze2d;
 	}
+	
+	/**
+	 * Gets the cross section by Z.
+	 *
+	 * @param z the z
+	 * @return the cross section by Z
+	 */
 	public int[][] getCrossSectionByZ(int z){
 		  if (!(z>=0 && z<this.floors)){
 			  throw new IndexOutOfBoundsException();
@@ -205,6 +272,12 @@ public class Maze3d {
 
 
 
+	/**
+	 * Gets all possible moves.
+	 *
+	 * @param p the Position to check
+	 * @return the possible moves
+	 */
 	public Direction[] getPossibleMoves(Position p) {
 		List <Direction> directions = new ArrayList<Direction>();
 	//System.out.println(p);

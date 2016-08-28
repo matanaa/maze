@@ -3,12 +3,22 @@ package algorithms.mazeGenerators;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SimpleMaze3dGenerator.
+ */
 public class SimpleMaze3dGenerator extends Maze3dGeneratorBase {
 
+	/**
+	 * Instantiates a new simple maze 3d generator.
+	 */
 	public SimpleMaze3dGenerator() {
 		// TODO Auto-generated constructor stub
 	}
 
+	/* (non-Javadoc)
+	 * @see algorithms.mazeGenerators.Maze3dGenerator#generate(int, int, int)
+	 */
 	@Override
 	public Maze3d generate(int floor, int rows, int cols) {
 		this.maze3d = new Maze3d(floor,rows, cols);
@@ -23,6 +33,12 @@ public class SimpleMaze3dGenerator extends Maze3dGeneratorBase {
 		return this.maze3d;
 	}
 	
+	/**
+	 * Simple route.
+	 *
+	 * @param now the start place
+	 * @return the end postion
+	 */
 	private  Position SimpleRoute(Position now){
 		
 		int steps=rand.nextInt(this.maze3d.getTotalCells()/2);

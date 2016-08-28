@@ -5,15 +5,30 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BFS.
+ *
+ * @param <T> the generic type
+ */
 public class BFS<T> extends CommonSearcher<T> {
 
+	/** The open list. */
 	private PriorityQueue<State<T>> openList = new PriorityQueue<State<T>>();
+	
+	/** The closed list. */
 	private Set<State<T>> closedList = new HashSet<State<T>>();
 	
+	/**
+	 * Instantiates a new bfs.
+	 */
 	public BFS() {
 		super();
 	}
 
+	/* (non-Javadoc)
+	 * @see algorithms.search.Seracher#search(algorithms.search.Searchable)
+	 */
 	@Override
 	public Solution<T> search(Searchable<T> s) {
 		State<T> startState = s.getStartState();
@@ -37,7 +52,7 @@ public class BFS<T> extends CommonSearcher<T> {
 					openList.add(neighbor);
 				}
 				else {
-					double newPathCost = currState.getCost() + s.getMoveCost(currState, neighbor);
+					double newPathCost =/* currState.getCost() +*/ s.getMoveCost(currState, neighbor);
 					if (neighbor.getCost() > newPathCost) {
 						neighbor.setCost(newPathCost);
 						neighbor.setCameFrom(currState);

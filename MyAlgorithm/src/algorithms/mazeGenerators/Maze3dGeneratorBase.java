@@ -45,6 +45,13 @@ public abstract class Maze3dGeneratorBase implements Maze3dGenerator {
 		return new Position(x, y,z);		
 	}
 	
+
+	/**
+	 * Gets the possible directions.
+	 *
+	 * @param p the test position
+	 * @return the possible directions from P
+	 */
 	protected Direction[] getPossibleDirections(Position p){
 		List <Direction> directions = new ArrayList<Direction>();
 //System.out.println(p);

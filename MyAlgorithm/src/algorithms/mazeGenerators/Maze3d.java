@@ -31,8 +31,8 @@ public class Maze3d {
 		 * @return the maze
 		 */
 		this.floors=floor;
-		this.rows=rows;
-		this.cols=cols;
+		this.rows=rows;//y
+		this.cols=cols;//x
 		this.maze=new int[floor][rows][cols];
 		
 	}
@@ -306,6 +306,65 @@ public class Maze3d {
 			return dir;
 		
 	}
+	
+
+
+
+public Maze3d(byte[] bytes){
+		int i = 0;
+		this.floors = (int)bytes[i++];
+		this.rows =(int)bytes[i++];
+		this.cols = (int)bytes[i++];
+		
+		this.startPosition = new Position((int)bytes[i++], (int)bytes[i++], (int)bytes[i++]);
+		this.goalPosition = new Position((int)bytes[i++], (int)bytes[i++], (int)bytes[i++]);
+		
+		this.maze = new int[this.floors][this.rows][this.cols];
+		
+		for(int t = 0 ;t < this.floors ; t++ ){					
+			for(int j = 0 ; j < this.rows ; j++){			
+				for(int h = 0 ; h < this.cols ; h++){
+					this.maze[t][j][h] = (int)bytes[i++];
+				}
+			}
+		}
+	}
+
+
+
+
+public byte[] toByteArray(){
+		
+		// Turning position to byte arrays using function
+		byte[] entranceByteArray = this.getStartPosition().toByteArray();
+		byte[] goalByteArray = this.getGoalPosition().toByteArray();
+		
+		// creating the byte array that will holds the maze
+		byte[] byteArray = new byte[this.floors * this.cols * this.rows + 3 + 
+		                            entranceByteArray.length + goalByteArray.length];
+		
+		// Entering the meta data to the array (start and goal positions, and amount of floors, cells and columns)
+		int i = 0;
+		byteArray[i++] = (byte)this.floors;
+		byteArray[i++] = (byte)this.rows;
+		byteArray[i++] = (byte)this.cols;
+		for (byte b : entranceByteArray){
+			byteArray[i++] = b;
+		}
+		for (byte b : goalByteArray){
+			byteArray[i++] = b;
+		}
+		// Entering the maze data - all the cells
+		for(int j = 0 ; j < this.floors ; j++){
+			for(int k = 0 ; k < this.rows ; k ++){
+				for(int t = 0 ; t < this.cols ; t++){
+					byteArray[i++]  = (byte) this.maze[j][k][t] ;
+				}
+			}
+		}
+		return byteArray;
+	}
+	
 /*	
 	public String[] getPossibleMoves(Position p) {
 			List <String> directions = new ArrayList<String>();

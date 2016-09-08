@@ -1,44 +1,45 @@
 package io;
+
 import java.io.IOException;
 import java.io.OutputStream;
-public class MyCompressorOutputStream extends OutputStream{
-	OutputStream out;
-	
+
+public class MyCompressorOutputStream extends OutputStream {
+
+	private OutputStream out;
 
 	public MyCompressorOutputStream(OutputStream out) {
-		super();
 		this.out = out;
 	}
 
 	@Override
 	public void write(int arg0) throws IOException {
 		out.write(arg0);
-		
-	}
-	public void write(byte[] b)throws IOException  {
-		int i=0; 
-		int count =0;
-		while (i < b.length){
-			count = byteCounter(i,b);
-			while (count>255){
-				out.write(b[i]);
-				out.write(255);
-				count-=255;
-			}
-			out.write(b[i]);
-			out.write(count);
-			
-		}
-		
 	}
 
-	private int byteCounter(int i, byte[] b) {
-		int count=0;
-		while (b[i]==b[i++]){
-			count++;
+	public void write(byte[] bytes) throws IOException {
+		int i = 0;
+		int counter = 0;
+		while (i < bytes.length) {
+			counter = byteCounter(i, bytes);
+			while (counter > 255) {
+				out.write(bytes[i]);
+				out.write(255);
+				counter -= 255;
+			}
+			out.write(bytes[i]);
+			out.write(counter);
+			i += counter;
 		}
-		return count;
 	}
-	
-	
+
+	private int byteCounter(int i, byte[] bytes) {
+		int counter = 1;
+		while ((bytes.length < i) && (bytes[i] == bytes[i++])) {
+			counter++;
+		}
+		return counter;
+	}
+
 }
+
+

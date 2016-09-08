@@ -86,6 +86,17 @@ public class Position {
 			break;
 		}
 	}
+
+	public byte[] toByteArray() {
+		// TODO Auto-generated method stub
+		byte[] ret=new byte[3];
+		ret[0]=(byte)this.z;
+		ret[1]=(byte)this.y;
+		ret[2]=(byte)this.x;
+
+
+		return null;
+	}
 	
 
 }

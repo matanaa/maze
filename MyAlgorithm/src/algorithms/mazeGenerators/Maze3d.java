@@ -1,424 +1,615 @@
 package algorithms.mazeGenerators;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Maze3d.
- *
- * @author matan
  */
 public class Maze3d {
-	
-	/**
-	 * 
-	 */
+
+	/** The maze. */
+	// DM
 	private int[][][] maze;
-	private int floors;
-	private int rows;
-	private int cols; 
-	private Position startPosition;
-	private Position goalPosition;
-	public static final int FREE = 0;
-	public static final int WALL = 1;
 
-	
-	public Maze3d(int floor,int rows, int cols) {
-		/**
-		 * this function will create new 3d instance 
-		 * 
-		 * @return the maze
-		 */
-		this.floors=floor;
-		this.rows=rows;//y
-		this.cols=cols;//x
-		this.maze=new int[floor][rows][cols];
-		
-	}
-	
+	/** The z. */
+	private int z;
+
+	/** The y. */
+	private int y;
+
+	/** The x. */
+	private int x;
+
+	/** The start position. */
+	private Position startPos;
+
+	/** The goal position. */
+	private Position goalPos;
+
+	/** The Constant WALL. */
+	// Constants
+	public final static int WALL = 1;
+
+	/** The Constant FREE. */
+	public final static int FREE = 0;
 
 	/**
-	 * Set free space.
+	 * Instantiates a new 3DMaze.
 	 *
-	 * @param z the z
-	 * @param x the x
-	 * @param y the y
+	 * @param z
+	 *            the z
+	 * @param y
+	 *            the y
+	 * @param x
+	 *            the x
 	 */
-	public void setFree(int z,int x, int y) {
-		maze[z][y][x] = FREE;
+	public Maze3d(int z, int y, int x) {
+		super();
+		this.z = z;
+		this.y = y;
+		this.x = x;
+		maze = new int[z][y][x];
 	}
-	
+
+	/**
+	 * Receives a data array and builds a new 3DMaze.
+	 *
+	 * @param bytes
+	 *            - a byte array which contains the data of the 3DMaze.
+	 */
+	public Maze3d(byte[] bytes) {
+		int i = 0;
+		this.z = (int) bytes[i++];
+		this.y = (int) bytes[i++];
+		this.x = (int) bytes[i++];
+
+		this.startPos = new Position((int) bytes[i++], (int) bytes[i++], (int) bytes[i++]);
+		this.goalPos = new Position((int) bytes[i++], (int) bytes[i++], (int) bytes[i++]);
+
+		this.maze = new int[this.z][this.y][this.x];
+
+		for (int t = 0; t < this.z; t++) {
+			for (int j = 0; j < this.y; j++) {
+				for (int h = 0; h < this.x; h++) {
+					this.maze[t][j][h] = (int) bytes[i++];
+				}
+			}
+		}
+	}
+
 	/**
 	 * Gets the maze.
 	 *
 	 * @return the maze
 	 */
+	// Setters Getters
 	public int[][][] getMaze() {
 		return maze;
 	}
 
 	/**
-	 * @return the floors count
-	 */
-	public int getFloors() {
-		return floors;
-	}
-
-	/**
-	 * @return the rows count
-	 */
-	public int getRows() {
-		return rows;
-	}
-
-	/**
-	 * @return the cols count
-	 */
-	public int getCols() {
-		return cols;
-	}
-
-
-	/**
-	 * @return the startPosition
-	 */
-	public Position getStartPosition() {
-		return startPosition;
-	}
-	/**
-	 * @param startPosition the startPosition to set
-	 */
-	public void setStartPosition(Position startPosition) {
-		this.startPosition = new Position(startPosition.x, startPosition.y, startPosition.z) ;
-	}
-	/**
-	 * @return the goalPosition
-	 */
-	public Position getGoalPosition() {
-		return goalPosition;
-	}
-	/**
-	 * @param goalPosition the goalPosition to set
-	 */
-	public void setGoalPosition(Position goalPosition) {
-		this.goalPosition =  new Position(goalPosition.x, goalPosition.y, goalPosition.z);
-	}
-
-
-	/**
-	 * @param z
-	 * @param y
-	 * @param x
-	 * @return the value in the maze 
-	 */
-	public int getValue(int z, int y, int x) {
-		// TODO Auto-generated method stub
-		return maze[z][y][x];
-	}
-
-	/**
-	 * This method Initialize all maze cells to be WALLS
-	 */
-	public void fillInWalls()
-	{
-		this.fillIn(WALL);
-	}
-	
-	/**
-	 * this function fill the maze with FREE/WALLS
-	 * @param dir FREE/WALL
-	 */
-	protected void fillIn(int dir){
-		for (int z=0;z<this.floors;z++)
-		{
-			for (int y=0;y<this.rows;y++)
-			{
-				for (int x=0;x<this.cols;x++)
-				{
-	
-						this.maze[z][y][x] = dir;
-					
-				}
-			}
-		}
-		
-	}
-	/**
-	 * @return the total cells
-	 */
-	public int getTotalCells(){
-		return this.floors*this.rows*this.cols;
-	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for (int z=0;z<this.floors;z++)
-		{
-		for (int y = 0; y < rows; y++) {
-			for (int x = 0; x < cols; x++) {
-				if (z==startPosition.z && y==startPosition.y && x==startPosition.x){
-					sb.append( "E ");
-				}
-				else if (z==goalPosition.z && y==goalPosition.y && x==goalPosition.x){
-					sb.append( "X ");
-				}
-				else{
-				sb.append(maze[z][y][x] + " ");
-				}
-			}
-			sb.append("\n");
-		}
-		sb.append("\n");
-		}
-		return sb.toString();
-	}
-
-	/**
-	 * This method Initialize one maze cells to be FREE
-	 */
-	public void setFree(Position p) {
-		maze[p.z][p.y][p.x] = FREE;
-		
-	}
-	
-	/**
-	 * Checks if is in maze.
+	 * Gets the z.
 	 *
-	 * @param pos the checking position
-	 * @return true, if is in maze
+	 * @return the z
 	 */
-	public boolean isInMaze(Position pos)
-	{
-		if (pos==null)
-			return false;
-	//	System.out.println(pos + " floors z " + this.floors  +" rows y " + this.rows +" cols x " + this.cols);
-		return (pos.z>=0 && pos.z<this.floors 
-				&& pos.x>=0 && pos.x<this.cols 
-				&& pos.y>=0 && pos.y<this.rows);
+	public int getZ() {
+		return z;
 	}
-	
+
+	/**
+	 * Sets the z.
+	 *
+	 * @param z
+	 *            the new z
+	 */
+	public void setZ(int z) {
+		this.z = z;
+	}
+
+	/**
+	 * Gets the y.
+	 *
+	 * @return the y
+	 */
+	public int getY() {
+		return y;
+	}
+
+	/**
+	 * Sets the y.
+	 *
+	 * @param y
+	 *            the new y
+	 */
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	/**
+	 * Gets the x.
+	 *
+	 * @return the x
+	 */
+	public int getX() {
+		return x;
+	}
+
+	/**
+	 * Sets the x.
+	 *
+	 * @param x
+	 *            the new x
+	 */
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	/**
+	 * Gets the start pos.
+	 *
+	 * @return the start pos
+	 */
+	public Position getStartPos() {
+		return startPos;
+	}
+
+	/**
+	 * Sets the start pos.
+	 *
+	 * @param startPos
+	 *            the new start pos
+	 */
+	public void setStartPos(Position startPos) {
+		this.startPos = startPos;
+	}
+
+	/**
+	 * Gets the goal pos.
+	 *
+	 * @return the goal pos
+	 */
+	public Position getGoalPos() {
+		return goalPos;
+	}
+
+	/**
+	 * Sets the goal pos.
+	 *
+	 * @param goalPos
+	 *            the new goal pos
+	 */
+	public void setGoalPos(Position goalPos) {
+		this.goalPos = goalPos;
+	}
+
+	/**
+	 * Prints the maze.
+	 */
+	// Method to print the maze
+	public void printMaze() {
+		for (int x = 0; x < maze.length; x++) {
+			for (int y = 0; y < maze[0].length; y++) {
+				for (int z = 0; z < maze[0][0].length; z++) {
+					System.out.print(maze[x][y][z] + " ");
+				}
+				System.out.print("\n");
+			}
+			System.out.print("\n");
+		}
+	}
+
+	/**
+	 * Sets the occ.
+	 *
+	 * @param z
+	 *            the z
+	 * @param y
+	 *            the y
+	 * @param x
+	 *            the x
+	 */
+	// Gets a coordinate and set it as occupied
+	public void setOcc(int z, int y, int x) {
+		maze[z][y][x] = WALL;
+	}
+
+	/**
+	 * Sets the free.
+	 *
+	 * @param z
+	 *            the z
+	 * @param y
+	 *            the y
+	 * @param x
+	 *            the x
+	 */
+	// Gets a coordinate and set it as free
+	public void setFree(int z, int y, int x) {
+		maze[z][y][x] = FREE;
+	}
+
+	/**
+	 * Inits the maze.
+	 *
+	 * @param n
+	 *            the n
+	 */
+	// Initialize maze - free or occupied
+	private void initMaze(int n) {
+
+		for (int i = 0; i < z; i++) {
+			for (int j = 0; j < y; j++) {
+				for (int k = 0; k < x; k++) {
+					this.maze[i][j][k] = n;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Inits the empty maze.
+	 */
+	// Initialize free maze
+	public void initEmptyMaze() {
+		this.initMaze(0);
+	}
+
+	/**
+	 * Inits the full maze.
+	 */
+	// Initialize occupied maze
+	public void initFullMaze() {
+		this.initMaze(1);
+	}
+
+	// Gets a cell, and maze sized array with information about visited and
+	// unvisited cells
+	/**
+	 * Gets the unvisited neighbors.
+	 *
+	 * @param visited
+	 *            the visited
+	 * @param currCell
+	 *            the curr cell
+	 * @return the unvisited neighbors
+	 */
+	// and returns a list of unvisited cells of this array
+	public ArrayList<Position> getUnvisitedNeighbors(boolean[][][] visited, Position currCell) {
+
+		// Creates the list we will return
+		ArrayList<Position> neighbors = new ArrayList<Position>();
+
+		// For an easier use of currCell coordinates
+		int z = currCell.getZ();
+		int y = currCell.getY();
+		int x = currCell.getX();
+
+		// This algorithm will add a visitor to the unvisited neighbor list as
+		// long as
+		// this neighbor hasn't been visited already and within the maze
+		if (z + 2 < this.z) {
+			if (visited[z + 2][y][x] == false) {
+				neighbors.add(new Position(z + 2, y, x));
+			}
+		}
+		if (y + 2 < this.y) {
+			if (visited[z][y + 2][x] == false) {
+				neighbors.add(new Position(z, y + 2, x));
+			}
+		}
+		if (x + 2 < this.x) {
+			if (visited[z][y][x + 2] == false) {
+				neighbors.add(new Position(z, y, x + 2));
+			}
+		}
+		if (z > 1) {
+			if (visited[z - 2][y][x] == false) {
+				neighbors.add(new Position(z - 2, y, x));
+			}
+		}
+		if (y > 1) {
+			if (visited[z][y - 2][x] == false) {
+				neighbors.add(new Position(z, y - 2, x));
+			}
+		}
+		if (x > 1) {
+			if (visited[z][y][x - 2] == false) {
+				neighbors.add(new Position(z, y, x - 2));
+			}
+		}
+
+		// Returns the list
+		return neighbors;
+	}
+
+	// This function will get two cells and break the wall between them
+	/**
+	 * Break wall.
+	 *
+	 * @param currCell
+	 *            the curr cell
+	 * @param newCell
+	 *            the new cell
+	 */
+	// (will make the cell between them available)
+	public void breakWall(Position currCell, Position newCell) {
+		int wallZ = currCell.getZ();
+		int wallY = currCell.getY();
+		int wallX = currCell.getX();
+		if (currCell.getZ() != newCell.getZ()) {
+			if (currCell.getZ() > newCell.getZ()) {
+				wallZ -= 1;
+			}
+			if (currCell.getZ() < newCell.getZ()) {
+				wallZ += 1;
+			}
+		}
+		if (currCell.getY() != newCell.getY()) {
+			if (currCell.getY() > newCell.getY()) {
+				wallY -= 1;
+			}
+			if (currCell.getY() < newCell.getY()) {
+				wallY += 1;
+			}
+		}
+		if (currCell.getX() != newCell.getX()) {
+			if (currCell.getX() > newCell.getX()) {
+				wallX -= 1;
+			}
+			if (currCell.getX() < newCell.getX()) {
+				wallX += 1;
+			}
+		}
+		this.maze[wallZ][wallY][wallX] = Maze3d.FREE;
+		this.maze[currCell.getZ()][currCell.getY()][currCell.getX()] = Maze3d.FREE;
+		this.maze[newCell.getZ()][newCell.getY()][newCell.getX()] = Maze3d.FREE;
+	}
+
+	/**
+	 * Creates the track.
+	 *
+	 * @param start
+	 *            the start
+	 * @param goal
+	 *            the goal
+	 */
+	// This function will receive two position and create an open path between
+	// them on the maze
+	public void createTrack(Position start, Position goal) {
+		// Variables
+		int startZ = start.getZ();
+		int startY = start.getY();
+		int startX = start.getX();
+		int goalZ = goal.getZ();
+		int goalY = goal.getY();
+		int goalX = goal.getX();
+		// create track on the Z axis
+		if (startZ > goalZ) {
+			for (; startZ > goalZ; startZ--) {
+				this.maze[startZ][startY][startX] = Maze3d.FREE;
+			}
+		}
+		if (startZ < goalZ) {
+			for (; startZ < goalZ; startZ++) {
+				this.maze[startZ][startY][startX] = Maze3d.FREE;
+			}
+		}
+		// create track on the Y axis
+		if (startY > goalY) {
+			for (; startY > goalY; startY--) {
+				this.maze[startZ][startY][startX] = Maze3d.FREE;
+			}
+		}
+		if (startY < goalY) {
+			for (; startY < goalY; startY++) {
+				this.maze[startZ][startY][startX] = Maze3d.FREE;
+			}
+		}
+		// create track on the x axis
+		if (startX > goalX) {
+			for (; startX > goalX; startX--) {
+				this.maze[startZ][startY][startX] = Maze3d.FREE;
+			}
+		}
+		if (startX < goalX) {
+			for (; startX < goalX; startX++) {
+				this.maze[startZ][startY][startX] = Maze3d.FREE;
+			}
+		}
+	}
+
 	/**
 	 * Gets the cross section by X.
 	 *
-	 * @param x the x
+	 * @param i
+	 *            the i
 	 * @return the cross section by X
+	 * @throws IndexOutOfBoundsException
+	 *             the index out of bounds exception
 	 */
-	public int[][] getCrossSectionByX(int x){
-		  if (!(x>=0 && x<this.cols)){
-			  throw new IndexOutOfBoundsException();
-			  
-		  }
-		
-		int[][] maze2d =new int[this.floors][this.cols];
-		for (int z=0;z<this.floors;z++)
-		{
-			for (int i = 0; i < this.cols; i++) {
-				maze2d[z][i]=maze[z][i][x];
-				
+	// Gets 2DMaze created by a cut of a maze on the X axis
+	public int[][] getCrossSectionByX(int i) throws IndexOutOfBoundsException {
+		if (i >= 0 && i <= this.getX()) {
+			int[][] Maze2D = new int[this.getY()][this.getZ()];
+			for (int j = 0; j < this.getY(); j++) {
+				for (int k = 0; k < this.getZ(); k++) {
+					Maze2D[j][k] = this.maze[i][j][k];
+				}
 			}
+			return Maze2D;
+		} else {
+			throw new IndexOutOfBoundsException();
 		}
-		return maze2d;
 	}
-	
+
 	/**
 	 * Gets the cross section by Y.
 	 *
-	 * @param y the y
+	 * @param i
+	 *            the i
 	 * @return the cross section by Y
+	 * @throws IndexOutOfBoundsException
+	 *             the index out of bounds exception
 	 */
-	public int[][] getCrossSectionByY(int y){
-	  if (!(y>=0 && y<this.rows)){
-		  throw new IndexOutOfBoundsException();
-		  
-	  }
-		int[][] maze2d =new int[this.floors][this.rows];
-		for (int z=0;z<this.floors;z++)
-		{
-			for (int i = 0; i < this.rows; i++) {
-				maze2d[z][i]=maze[z][y][i];
-				
+	// Gets 2DMaze created by a cut of a maze on the Y axis
+	public int[][] getCrossSectionByY(int i) throws IndexOutOfBoundsException {
+		if (i >= 0 && i <= this.getY()) {
+			int[][] Maze2D = new int[this.getX()][this.getZ()];
+			for (int j = 0; j < this.getX(); j++) {
+				for (int k = 0; k < this.getZ(); k++) {
+					Maze2D[j][k] = this.maze[j][i][k];
+				}
 			}
+			return Maze2D;
+		} else {
+			throw new IndexOutOfBoundsException();
 		}
-		return maze2d;
 	}
-	
+
 	/**
 	 * Gets the cross section by Z.
 	 *
-	 * @param z the z
+	 * @param i
+	 *            the i
 	 * @return the cross section by Z
+	 * @throws IndexOutOfBoundsException
+	 *             the index out of bounds exception
 	 */
-	public int[][] getCrossSectionByZ(int z){
-		  if (!(z>=0 && z<this.floors)){
-			  throw new IndexOutOfBoundsException();
-			  
-		  }
+	// Gets 2DMaze created by a cut of a maze on the Z axis
+	public int[][] getCrossSectionByZ(int i) throws IndexOutOfBoundsException {
+		if (i >= 0 && i <= this.getZ()) {
+			int[][] Maze2D = new int[this.getX()][this.getY()];
 
-		 
-		int[][] maze2d =new int[this.cols][this.rows];
-		for (int y=0;y<this.cols;y++)
-		{
-			for (int i = 0; i < this.rows; i++) {
-				maze2d[y][i]=maze[z][y][i];
-				
+			for (int j = 0; j < this.getX(); j++) {
+				for (int k = 0; k < this.getY(); k++) {
+					Maze2D[j][k] = this.maze[j][k][i];
+				}
 			}
-		}
-		return maze2d;
+			return Maze2D;
+		} else
+			throw new IndexOutOfBoundsException();
 	}
-
-
 
 	/**
-	 * Gets all possible moves.
+	 * Gets the possible moves.
 	 *
-	 * @param p the Position to check
+	 * @param pos
+	 *            the position
 	 * @return the possible moves
 	 */
-	public Direction[] getPossibleMoves(Position p) {
-		List <Direction> directions = new ArrayList<Direction>();
-	//System.out.println(p);
-			if (isInMaze(new Position(p.x+1,p.y,p.z ))&& getValue(p.z,p.y, p.x+1)==Maze3d.FREE){
-				directions.add(Direction.Right);
-			}
-			if (isInMaze(new Position( p.x-1, p.y,p.z))&& getValue(p.z,p.y, p.x-1)==Maze3d.FREE){
-				directions.add(Direction.Left);
-			}
-			if (isInMaze(new Position(p.x , p.y+1,p.z))&& getValue(p.z,p.y+1, p.x)==Maze3d.FREE){
-				directions.add(Direction.Forward);
-			}
-			if (isInMaze(new Position( p.x, p.y-1, p.z))&& getValue(p.z,p.y-1, p.x)==Maze3d.FREE){
-				directions.add(Direction.Backward);
-			}
-			if (isInMaze(new Position(p.x, p.y,p.z+1 ))&& getValue(p.z+1,p.y, p.x)==Maze3d.FREE){
-				directions.add(Direction.Up);
-			}
-			if (isInMaze(new Position(p.z-1, p.y,p.x))&& getValue(p.z-1,p.y, p.x)==Maze3d.FREE){
-				directions.add(Direction.Down);
-			}
+	public ArrayList<Position> getPossibleMoves(Position pos) {
 
-			Direction[] dir = new Direction[directions.size()];
-			dir = directions.toArray(dir);
-			
-			return dir;
-		
+		ArrayList<Position> possibleMoves = new ArrayList<Position>();
+		if (pos.x + 1 < this.getX()) {
+			if (maze[pos.z][pos.y][pos.x + 1] == FREE)
+				possibleMoves.add(new Position(pos.z, pos.y, pos.x + 1));
+		}
+		if (pos.x > 0) {
+			if (maze[pos.z][pos.y][pos.x - 1] == FREE)
+				possibleMoves.add(new Position(pos.z, pos.y, pos.x - 1));
+		}
+		if (pos.y + 1 < this.getY()) {
+			if (maze[pos.z][pos.y + 1][pos.x] == FREE)
+				possibleMoves.add(new Position(pos.z, pos.y + 1, pos.x));
+		}
+		if (pos.y > 0) {
+			if (maze[pos.z][pos.y - 1][pos.x] == FREE)
+				possibleMoves.add(new Position(pos.z, pos.y - 1, pos.x));
+		}
+		if (pos.z + 1 < this.getZ()) {
+			if (maze[pos.z + 1][pos.y][pos.x] == FREE)
+				possibleMoves.add(new Position(pos.z + 1, pos.y, pos.x));
+		}
+		if (pos.z > 0) {
+			if (maze[pos.z - 1][pos.y][pos.x] == FREE)
+				possibleMoves.add(new Position(pos.z - 1, pos.y, pos.x));
+		}
+		return (ArrayList<Position>) possibleMoves;
 	}
-	
 
-
-
-public Maze3d(byte[] bytes){
-		int i = 0;
-		this.floors = (int)bytes[i++];
-		this.rows =(int)bytes[i++];
-		this.cols = (int)bytes[i++];
-		
-		this.startPosition = new Position((int)bytes[i++], (int)bytes[i++], (int)bytes[i++]);
-		this.goalPosition = new Position((int)bytes[i++], (int)bytes[i++], (int)bytes[i++]);
-		
-		this.maze = new int[this.floors][this.rows][this.cols];
-		
-		for(int t = 0 ;t < this.floors ; t++ ){					
-			for(int j = 0 ; j < this.rows ; j++){			
-				for(int h = 0 ; h < this.cols ; h++){
-					this.maze[t][j][h] = (int)bytes[i++];
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object maze) {
+		Maze3d m = (Maze3d) maze;
+		if ((this.getZ() != m.getZ()) || (this.getY() != m.getY()) || (this.getX() != m.getX())) {
+			return false;
+		}
+		if (!this.getStartPos().equals(m.getStartPos()) || !this.getGoalPos().equals(m.getGoalPos())) {
+			return false;
+		}
+		for (int i = 0; i < this.z; i++) {
+			for (int j = 0; j < this.y; j++) {
+				for (int h = 0; h < this.x; h++) {
+					if (this.maze[i][j][h] != m.maze[i][j][h]) {
+						return false;
+					}
 				}
 			}
 		}
+		return true;
 	}
 
+	/**
+	 * Return the maze as a byte array.
+	 *
+	 * @return the byte array
+	 */
+	public byte[] toByteArray() {
 
-
-
-public byte[] toByteArray(){
-		
 		// Turning position to byte arrays using function
-		byte[] entranceByteArray = this.getStartPosition().toByteArray();
-		byte[] goalByteArray = this.getGoalPosition().toByteArray();
-		
+		byte[] entranceByteArray = this.getStartPos().toByteArray();
+		byte[] goalByteArray = this.getGoalPos().toByteArray();
+
 		// creating the byte array that will holds the maze
-		byte[] byteArray = new byte[this.floors * this.cols * this.rows + 3 + 
-		                            entranceByteArray.length + goalByteArray.length];
-		
-		// Entering the meta data to the array (start and goal positions, and amount of floors, cells and columns)
+		byte[] byteArray = new byte[this.getZ() * this.getY() * this.getX() + 3 + entranceByteArray.length
+				+ goalByteArray.length];
+
+		// Entering the meta data to the array (start and goal positions, and
+		// amount of floors, cells and columns)
 		int i = 0;
-		byteArray[i++] = (byte)this.floors;
-		byteArray[i++] = (byte)this.rows;
-		byteArray[i++] = (byte)this.cols;
-		for (byte b : entranceByteArray){
+		byteArray[i++] = (byte) this.getZ();
+		byteArray[i++] = (byte) this.getY();
+		byteArray[i++] = (byte) this.getX();
+		for (byte b : entranceByteArray) {
 			byteArray[i++] = b;
 		}
-		for (byte b : goalByteArray){
+		for (byte b : goalByteArray) {
 			byteArray[i++] = b;
 		}
 		// Entering the maze data - all the cells
-		for(int j = 0 ; j < this.floors ; j++){
-			for(int k = 0 ; k < this.rows ; k ++){
-				for(int t = 0 ; t < this.cols ; t++){
-					byteArray[i++]  = (byte) this.maze[j][k][t] ;
+		for (int j = 0; j < this.getZ(); j++) {
+			for (int k = 0; k < this.getY(); k++) {
+				for (int t = 0; t < this.getX(); t++) {
+					byteArray[i++] = (byte) this.maze[j][k][t];
 				}
 			}
 		}
 		return byteArray;
 	}
 
-
-/* (non-Javadoc)
- * @see java.lang.Object#hashCode()
- */
-@Override
-public int hashCode() {
-	return toString().hashCode();
-}
-
-
-/* (non-Javadoc)
- * @see java.lang.Object#equals(java.lang.Object)
- */
-@Override
-public boolean equals(Object obj) {
-	if (this == obj)
-		return true;
-	if (obj == null)
-		return false;
-	if (getClass() != obj.getClass())
-		return false;
-	Maze3d other = (Maze3d) obj;
-return this.toString().equals(other.toString());
-}
-
-
-	
-/*	
-	public String[] getPossibleMoves(Position p) {
-			List <String> directions = new ArrayList<String>();
-	//System.out.println(p);
-			if (isInMaze(new Position(p.x+1,p.y, p.z))&& getValue(p.z,p.y, p.x+1)==Maze3d.FREE){
-				directions.add("Right");
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < this.z; i++) {
+			for (int j = 0; j < this.y; j++) {
+				for (int k = 0; k < this.x; k++) {
+					if (i == startPos.z && j == startPos.y && k == startPos.x) {
+						sb.append("S ");
+					} else if (i == goalPos.z && j == goalPos.y && k == goalPos.x) {
+						sb.append("G ");
+					} else {
+						sb.append(this.maze[i][j][k] + " ");
+					}
+				}
+				sb.append("\n");
 			}
-			if (isInMaze(new Position( p.x-1, p.y,p.z))&& getValue(p.z,p.y, p.x-1)==Maze3d.FREE){
-				directions.add("Left");
-			}
-			if (isInMaze(new Position( p.x, p.y+1,p.z))&& getValue(p.z,p.y+1, p.x)==Maze3d.FREE){
-				directions.add("Forward");
-			}
-			if (isInMaze(new Position(p.x, p.y-1,p.z ))&& getValue(p.z,p.y-1, p.x)==Maze3d.FREE){
-				directions.add("Backward");
-			}
-			if (isInMaze(new Position( p.x, p.y,p.z+1))&& getValue(p.z+1,p.y, p.x)==Maze3d.FREE){
-				directions.add("Up");
-			}
-			if (isInMaze(new Position(p.x, p.y,p.z-1 ))&& getValue(p.z-1,p.y, p.x)==Maze3d.FREE){
-				directions.add("Down");
-			}
-			String[] dir = new String[directions.size()];
-			dir = directions.toArray(dir);
-			
-			return dir;
-		
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
-*/
 }

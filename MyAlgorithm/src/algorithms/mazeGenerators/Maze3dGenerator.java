@@ -1,5 +1,6 @@
 package algorithms.mazeGenerators;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface Maze3dGenerator.
  */
@@ -8,21 +9,21 @@ public interface Maze3dGenerator {
 	/**
 	 * Generate.
 	 *
-	 * @param floor the floor
-	 * @param rows the rows
-	 * @param cols the cols
+	 * @param z the z
+	 * @param y the y
+	 * @param x the x
 	 * @return the maze 3 d
 	 */
-	Maze3d generate(int floor,int rows, int cols);
+	public Maze3d generate(int z, int y, int x);
 	
 	/**
 	 * Measure algorithm time.
 	 *
-	 * @param floor the floor
-	 * @param rows the rows
-	 * @param cols the cols
-	 * @return the Time to create the maze
+	 * @param z the z
+	 * @param y the y
+	 * @param x the x
+	 * @return the string
 	 */
-	String measureAlgorithmTime(int floor,int rows, int cols);
-			
+	public String measureAlgorithmTime(int z, int y, int x);
+	
 }

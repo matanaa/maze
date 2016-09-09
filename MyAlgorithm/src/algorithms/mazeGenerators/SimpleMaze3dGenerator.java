@@ -1,103 +1,44 @@
 package algorithms.mazeGenerators;
 
-import java.util.ArrayList;
-import java.util.List;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class SimpleMaze3dGenerator.
  */
-public class SimpleMaze3dGenerator extends Maze3dGeneratorBase {
-
-	/**
-	 * Instantiates a new simple maze 3d generator.
-	 */
-	public SimpleMaze3dGenerator() {
-		// TODO Auto-generated constructor stub
-	}
-
+public class SimpleMaze3dGenerator extends CommonMaze3dGenerator {
+	
+	/** The Constant WALL_RATIO. */
+	// This will decide what will be the free \ occupied cells ratio
+	private static final float WALL_RATIO = 0.5F;
+	
 	/* (non-Javadoc)
-	 * @see algorithms.mazeGenerators.Maze3dGenerator#generate(int, int, int)
+	 * @see algorithms.mazeGenerators.CommonMaze3dGenerator#generate(int, int, int)
 	 */
 	@Override
-	public Maze3d generate(int floor, int rows, int cols) {
-		this.maze3d = new Maze3d(floor,rows, cols);
-		this.maze3d.fillInWalls();
-		Position startPos = chooseRandomPosition();
+	// Generating the maze
+	public Maze3d generate(int z, int y, int x) {
+		// Creates the maze we will return
+		Maze3d mazeObj = new Maze3d(z, y, x);
+		// go through random cells and make them occupied
+		for(int i = 0 ; i < (int)(WALL_RATIO*x*y*z) ; i++){
+			int levels = rand.nextInt(z);
+			int rows = rand.nextInt(y);
+			int cols = rand.nextInt(x);
+			mazeObj.setOcc(levels,rows,cols);
+		}
+		// Generating random start and goal positions
+		Position startPos = chooseRandomFreePos(mazeObj);
+		mazeObj.setStartPos(startPos);
+		Position goalPos = chooseRandomFreePos(mazeObj);
+		mazeObj.setGoalPos(goalPos);
 		
-		maze3d.setFree(startPos);
-		maze3d.setStartPosition(startPos);
-		Position endPos=SimpleRoute(startPos);
-		maze3d.setGoalPosition(endPos);
-			
-		return this.maze3d;
+		//Make sure there's a path between entrance and exit
+		mazeObj.createTrack(startPos, goalPos);
+		
+		return mazeObj;
 	}
 	
-	/**
-	 * Simple route.
-	 *
-	 * @param now the start place
-	 * @return the end postion
-	 */
-	private  Position SimpleRoute(Position now){
-		
-		int steps=rand.nextInt(this.maze3d.getTotalCells()/2);
-		for (int i=0;i<steps;i++){
-			Direction[] dirs = getPossibleDirections(now);
-			if (dirs.length ==0)
-			{
-				break;
-			}
-			int indexOfDir = rand.nextInt(dirs.length);
-			now.changeByDirection(dirs[indexOfDir]);
-			this.maze3d.setFree(now);
-			//System.out.println(i+")"+now);
-			
-		}
-		return now;
-		
-
-	}
+	
 	
 
-	
-	
-	/*private Direction[] getPossibleDirections(Position currPos) {
-		List<Direction> directions = new ArrayList<Direction>();
-		
-		if (currPos.x + 2 < maze3d.getCols() && 
-				maze3d.getValue(currPos.z,currPos.x +2, currPos.y) == Maze3d.WALL) {
-			directions.add(Direction.Right);
-		}
-		
-		if (currPos.x - 2 >= 0 && 
-				maze3d.getValue(currPos.z,currPos.x - 2, currPos.y) == Maze3d.WALL) {
-			directions.add(Direction.Left);
-		}
-		
-		if (currPos.y + 2 < maze3d.getRows() && 
-				maze3d.getValue(currPos.z,currPos.x, currPos.y + 2) == Maze3d.WALL) {
-			directions.add(Direction.Forward);
-		}
-		
-		if (currPos.y - 2 < maze3d.getRows() && currPos.y - 2 >0 &&
-				maze3d.getValue(currPos.z,currPos.x, currPos.y - 2) == Maze3d.WALL) {
-			directions.add(Direction.Backward);
-		}
-		if (currPos.z + 2 < maze3d.getFloors() &&
-				maze3d.getValue(currPos.z+ 2,currPos.x, currPos.y ) == Maze3d.WALL) {
-			directions.add(Direction.Up);
-		}
-		
-		if (currPos.z - 2 < maze3d.getFloors() && currPos.z - 2 >0 &&
-				maze3d.getValue(currPos.z- 2,currPos.x, currPos.y ) == Maze3d.WALL) {
-			directions.add(Direction.Down);
-		}
-		Direction[] dir = new Direction[directions.size()];
-		dir = directions.toArray(dir);
-		
-		return dir;
-	}*/
-	
 
 }

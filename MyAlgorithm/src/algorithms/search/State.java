@@ -1,6 +1,5 @@
 package algorithms.search;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class State.
  *
@@ -8,53 +7,37 @@ package algorithms.search;
  */
 public class State<T> implements Comparable<State<T>> {
 	
-	/** The came from. */
-	private State <T> cameFrom =null;
+	/** The state. */
+	private T state;
 	
 	/** The cost. */
 	private double cost;
 	
-	/** The value. */
-	private T value;
+	/** The came from state. */
+	private State<T> cameFrom;
 	
 	/** The key. */
 	private String key;
 	
 	/**
-	 * Instantiates a new state.
+	 * Gets the state.
 	 *
-	 * @param key the key
+	 * @return the state
 	 */
-	public State (String key){
-		this.key = key;
+	// Getters Setters
+	public T getState() {
+		return state;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return value.toString();
-	}
-
 	/**
-	 * Gets the came from.
+	 * Sets the state.
 	 *
-	 * @return the came from
+	 * @param state the new state
 	 */
-	public State<T> getCameFrom() {
-		return cameFrom;
+	public void setState(T state) {
+		this.state = state;
 	}
-
-	/**
-	 * Sets the came from.
-	 *
-	 * @param cameFrom the new came from
-	 */
-	public void setCameFrom(State<T> cameFrom) {
-		this.cameFrom = cameFrom;
-	}
-
+	
 	/**
 	 * Gets the cost.
 	 *
@@ -63,7 +46,7 @@ public class State<T> implements Comparable<State<T>> {
 	public double getCost() {
 		return cost;
 	}
-
+	
 	/**
 	 * Sets the cost.
 	 *
@@ -72,25 +55,25 @@ public class State<T> implements Comparable<State<T>> {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
-
+	
 	/**
-	 * Gets the value.
+	 * Gets the came from.
 	 *
-	 * @return the value
+	 * @return the came from state
 	 */
-	public T getValue() {
-		return value;
+	public State<T> getCameFrom() {
+		return cameFrom;
 	}
-
+	
 	/**
-	 * Sets the value.
+	 * Sets the came from.
 	 *
-	 * @param value the new value
+	 * @param cameFrom the new came from state
 	 */
-	public void setValue(T value) {
-		this.value = value;
+	public void setCameFrom(State<T> cameFrom) {
+		this.cameFrom = cameFrom;
 	}
-
+	
 	/**
 	 * Gets the key.
 	 *
@@ -99,7 +82,7 @@ public class State<T> implements Comparable<State<T>> {
 	public String getKey() {
 		return key;
 	}
-
+	
 	/**
 	 * Sets the key.
 	 *
@@ -109,28 +92,47 @@ public class State<T> implements Comparable<State<T>> {
 		this.key = key;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
+	
+	/**
+	 * Instantiates a new state.
+	 *
+	 * @param State the state
 	 */
-	@Override
-	public boolean equals(Object obj) {
-		@SuppressWarnings("unchecked")
-		State<T> s = (State<T>)obj;
-		return s.value.equals(this.value);
+	// Constructor
+	public State(T State){
+		this.state = State;
+		this.cost = 0;
+		this.cameFrom = null;
 	}
 	
 	/**
-	 * Equals.
+	 * Instantiates a new state.
 	 *
-	 * @param obj the obj
-	 * @return true, if successful
+	 * @param key the key
 	 */
-	public boolean equals(State<T> obj) {
-		//@SuppressWarnings("unchecked")
-		return obj.value.equals(this.value);
+	public State(String key){
+		this.key = key;
 	}
-
-
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	// Equals function
+	@Override
+	public boolean equals(Object obj){
+		@SuppressWarnings("unchecked")
+		State<T> s = ((State<T>) obj);
+		return s.state.equals(this.state);
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public	String toString() {
+		return state.toString();
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
@@ -139,5 +141,6 @@ public class State<T> implements Comparable<State<T>> {
 		return (int)(this.getCost() - s.getCost());
 	}
 	
-	
+
+
 }

@@ -1,64 +1,60 @@
-
 package algorithms.search;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class DFS.
- *
+ * The Class DFS - Searching for a solution
+ *@author Snir Balgaly
  * @param <T> the generic type
  */
 public class DFS<T> extends CommonSearcher<T> {
 
-	/** The beenthere. */
-	List<State<T>> beenthere=new ArrayList<State<T>>();
+	/** The array of visited cells */
+	List<State<T>> visited=new ArrayList<State<T>>();
+	
 	
 	/* (non-Javadoc)
-	 * @see algorithms.search.Seracher#search(algorithms.search.Searchable)
+	 * @see algorithms.search.CommonSearcher#search(algorithms.search.Searchable)
 	 */
 	@Override
-	public Solution<T> search(Searchable<T> s) {
-		State<T> now = s.getStartState();
-		beenthere.add(now);
-		doDfs(now, s);
-		return  backTrace(s.getGoalState());
+	public Solution<T> search(Searchable<T> searchable) {
+		State<T> currState = searchable.getStartState();
+		visited.add(currState);
+		doDfs(currState, searchable);
+		return backTrace(searchable.getGoalState());
 	}
 	
-	
-	
 	/**
-	 * recursive method to find the way
+	 * doDfs - the main algorithm.
 	 *
-	 * @param now the now
-	 * @param s the s
+	 * @param currState the current state
+	 * @param searchable the searchable (the game we want to solve)
 	 * @return true, if successful
 	 */
-	protected boolean doDfs(State<T> now,Searchable<T> s){
+	protected boolean doDfs(State<T> currState,Searchable<T> searchable){
 		
-		if (now.equals(s.getGoalState())){
-			State<T> start = s.getGoalState();
-			start.setCameFrom(now.getCameFrom());
+		if (currState.equals(searchable.getGoalState())){
+			State<T> start = searchable.getGoalState();
+			start.setCameFrom(currState.getCameFrom());
+			start.setCost(currState.getCost());
 			return true;
 		}
 		
-		List<State<T>> neighbors = s.getAllPossibleStates(now);
+		List<State<T>> neighbors = searchable.getAllPossibleMoves(currState);
+		
 		
 		for (State<T> neighbor : neighbors) {
-			if (!beenthere.contains(neighbor) /*&& !neighbor.equals(s.getStartState())*/ ) {
-				neighbor.setCameFrom(now);
-				beenthere.add(neighbor);
-				if (doDfs(neighbor, s))
-				{
+			if (!visited.contains(neighbor) && !neighbor.equals(searchable.getStartState())) {
+				neighbor.setCameFrom(currState);
+				neighbor.setCost(searchable.getMoveCost(currState, neighbor));
+				visited.add(neighbor);
+				this.evaluatedNodes++;
+				if (doDfs(neighbor, searchable)){
 					return true;
 				}
 			}
-		
-		
 		}
 		return false;
-
 	}
-
 }

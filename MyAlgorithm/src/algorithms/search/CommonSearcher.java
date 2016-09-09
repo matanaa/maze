@@ -2,42 +2,56 @@ package algorithms.search;
 
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class CommonSearcher.
- *
+ * The Class CommonSearcher - Abstract class used to hold mutual data for all searchers.
+ *@author Snir Balgaly
  * @param <T> the generic type
  */
-public abstract class CommonSearcher<T> implements Seracher<T>{
+public abstract class CommonSearcher<T> implements Searcher<T> {
 	
-	/** The evaluated nodes. */
+	/** The evaluated nodes number. */
 	protected int evaluatedNodes;
 	
-	/* (non-Javadoc)
-	 * @see algorithms.search.Seracher#getNumberOfNodesEvaluated()
+	/**
+	 * Gets the evaluated nodes.
+	 *
+	 * @return the evaluated nodes
 	 */
-	@Override
-	public int getNumberOfNodesEvaluated() {
+	// Getters Setters
+	public int getEvaluatedNodes() {
 		return evaluatedNodes;
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see algorithms.search.Searcher#search(algorithms.search.Searchable)
+	 */
+	@Override
+	public abstract Solution<T> search(Searchable<T> searchable);
+
+	/* (non-Javadoc)
+	 * @see algorithms.search.Searcher#getEvaluatedNodesNun()
+	 */
+	@Override
+	public int getEvaluatedNodesNun() {
+		return evaluatedNodes;
+	}
+
 	/**
-	 * Back trace. calculate the Solution
+	 * Back trace.
 	 *
 	 * @param goalState the goal state
 	 * @return the solution
 	 */
-	protected Solution<T> backTrace(State<T> goalState) {
-			Solution<T> sol = new Solution<T>();
-			
-			State<T> currState = goalState;
-			List<State<T>> states = sol.getStates();
-			while (currState!=null){
-				states.add(0, currState);
-				currState = currState.getCameFrom();
-			}
-			return sol;
-			
+	protected Solution<T> backTrace(State<T> goalState){
+		Solution<T> sol = new Solution<T>();
+		State<T> currState = goalState;
+		List<State<T>> states = sol.getSolution();
+		while (currState != null){
+			states.add(0, currState);
+			currState = currState.getCameFrom();
+		}
+		sol.setSolutionCost(goalState.getCost());
+		return sol;
 	}
-}
 
+}

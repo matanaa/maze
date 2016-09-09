@@ -364,6 +364,33 @@ public byte[] toByteArray(){
 		}
 		return byteArray;
 	}
+
+
+/* (non-Javadoc)
+ * @see java.lang.Object#hashCode()
+ */
+@Override
+public int hashCode() {
+	return toString().hashCode();
+}
+
+
+/* (non-Javadoc)
+ * @see java.lang.Object#equals(java.lang.Object)
+ */
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null)
+		return false;
+	if (getClass() != obj.getClass())
+		return false;
+	Maze3d other = (Maze3d) obj;
+return this.toString().equals(other.toString());
+}
+
+
 	
 /*	
 	public String[] getPossibleMoves(Position p) {

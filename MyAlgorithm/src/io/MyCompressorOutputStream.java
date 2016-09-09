@@ -34,7 +34,7 @@ public class MyCompressorOutputStream extends OutputStream {
 
 	private int byteCounter(int i, byte[] bytes) {
 		int counter = 1;
-		while ((bytes.length < i) && (bytes[i] == bytes[i++])) {
+		while ((bytes.length > i+1) && (bytes[i] == bytes[++i])) {
 			counter++;
 		}
 		return counter;

@@ -90,12 +90,12 @@ public class Position {
 	public byte[] toByteArray() {
 		// TODO Auto-generated method stub
 		byte[] ret=new byte[3];
-		ret[0]=(byte)this.z;
+		
+		ret[0]=(byte)this.x;
 		ret[1]=(byte)this.y;
-		ret[2]=(byte)this.x;
+		ret[2]=(byte)this.z;
 
-
-		return null;
+		return ret;
 	}
 	
 

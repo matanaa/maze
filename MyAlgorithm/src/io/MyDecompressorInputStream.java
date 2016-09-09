@@ -16,27 +16,18 @@ public class MyDecompressorInputStream extends InputStream {
 		return (int)in.read();
 	}
 	
-	public int read(byte[] bytes) throws IOException {
-		byte zeroOrOne;
-		byte counter;
-		int fileSize= in.available();
-		int k = 0 ;
-		
-		for(int i = 0 ; i < fileSize ; i += 2){
-			if(bytes.length <= k){
-				break;
-			}
-			zeroOrOne = (byte)in.read();
-			counter = (byte)in.read();
+	
+	public int read(byte[] arr) throws IOException {
+		int k = 0;
+		while (k < arr.length) {
+			byte b = (byte) in.read();
+			byte count = (byte) in.read();
 			
-			for(int j = 0 ; j < counter ; j++){
-				if(bytes.length <= k){
-					break;
-				}
-				bytes[k++] = zeroOrOne;
+			for (int j = 0; j < count; j++) {
+				arr[k++] = b;
 			}
 		}
-		return -1;
+		return arr.length;		
 	}
 }
 

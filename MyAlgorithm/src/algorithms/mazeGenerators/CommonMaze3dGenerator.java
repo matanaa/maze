@@ -79,5 +79,26 @@ public abstract class CommonMaze3dGenerator implements Maze3dGenerator {
 		
 		return String.valueOf(endTime-startTime);
 	}
+	
+	/** The is done. */
+	protected boolean isDone=false;
+	
+	/**
+	 * Checks if is done.
+	 *
+	 * @return true, if is done
+	 */
+	public boolean isDone(){
+		return isDone;
+	}
+	
+	/**
+	 * Sets the done.
+	 *
+	 * @param isDone the new done
+	 */
+	public void setDone(boolean isDone){
+		this.isDone=isDone;
+	}
 
 }

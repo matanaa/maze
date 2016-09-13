@@ -26,4 +26,12 @@ public interface Maze3dGenerator {
 	 */
 	public String measureAlgorithmTime(int z, int y, int x);
 	
+	/**
+	 * Sets the done.
+	 *
+	 * @param isDone the new done
+	 */
+	void setDone(boolean isDone);
+	
+	
 }

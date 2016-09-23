@@ -1,13 +1,16 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Maze3d.
  */
-public class Maze3d {
-
+public class Maze3d implements Serializable {
+	
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
 	/** The maze. */
 	// DM
 	private int[][][] maze;
@@ -592,6 +595,9 @@ public class Maze3d {
 		return byteArray;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

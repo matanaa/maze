@@ -1,5 +1,6 @@
 package algorithms.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,10 @@ import java.util.List;
  * @param <T>
  *            the generic type
  */
-public class Solution<T> {
-
+public class Solution<T> implements Serializable {
+	
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1;
 	/** The solution. */
 	private List<State<T>> solution;
 

@@ -1,11 +1,15 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Position.
  */
-public class Position {
+public class Position implements Serializable {
 	
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1;
 	/** The z. */
 	//DM
 	public int z;
@@ -104,7 +108,7 @@ public class Position {
 	}
 	
 	/**
-	 * Turn position into a byte array
+	 * Turn position into a byte array.
 	 *
 	 * @return the byte array of the position
 	 */

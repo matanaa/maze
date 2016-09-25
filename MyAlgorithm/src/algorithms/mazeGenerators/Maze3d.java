@@ -437,7 +437,7 @@ public class Maze3d implements Serializable {
 			int[][] Maze2D = new int[this.getY()][this.getZ()];
 			for (int j = 0; j < this.getY(); j++) {
 				for (int k = 0; k < this.getZ(); k++) {
-					Maze2D[j][k] = this.maze[i][j][k];
+					Maze2D[j][k] = this.maze[j][k][i];
 				}
 			}
 			return Maze2D;
@@ -486,7 +486,7 @@ public class Maze3d implements Serializable {
 
 			for (int j = 0; j < this.getX(); j++) {
 				for (int k = 0; k < this.getY(); k++) {
-					Maze2D[j][k] = this.maze[j][k][i];
+					Maze2D[j][k] = this.maze[i][j][k];
 				}
 			}
 			return Maze2D;

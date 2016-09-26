@@ -482,10 +482,10 @@ public class Maze3d implements Serializable {
 	// Gets 2DMaze created by a cut of a maze on the Z axis
 	public int[][] getCrossSectionByZ(int i) throws IndexOutOfBoundsException {
 		if (i >= 0 && i <= this.getZ()) {
-			int[][] Maze2D = new int[this.getX()][this.getY()];
+			int[][] Maze2D = new int[this.getY()][this.getX()];
 
-			for (int j = 0; j < this.getX(); j++) {
-				for (int k = 0; k < this.getY(); k++) {
+			for (int j = 0; j < this.getY(); j++) {
+				for (int k = 0; k < this.getX(); k++) {
 					Maze2D[j][k] = this.maze[i][j][k];
 				}
 			}

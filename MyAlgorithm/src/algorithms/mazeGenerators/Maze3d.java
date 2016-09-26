@@ -81,6 +81,12 @@ public class Maze3d implements Serializable {
 		}
 	}
 
+	public Maze3d(int[][][] maze, Position startPos, Position goalPos) {
+		this.maze = maze;
+		this.startPos = startPos;
+		this.goalPos = goalPos;
+	}
+
 	/**
 	 * Gets the maze.
 	 *

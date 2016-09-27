@@ -19,7 +19,7 @@ public class BFSTest {
 			};
 	Position startPos = new Position(0, 1, 1);
 	Position goalPos = new Position(0, 1, 3);
-	Searchable<Position> mazeSearchable = new MazeAdapter(new Maze3d(maze, startPos, goalPos));
+	Searchable<Position> mazeSearchable = new MazeAdapter(new Maze3d(maze,1,5,5, startPos, goalPos));
 	Searcher<Position> bfs = new BFS<Position>();
 	Solution<Position> sol = bfs.search(mazeSearchable);
 
@@ -29,7 +29,7 @@ public class BFSTest {
 	 */
 	@Test
 	public void shouldReturnCountOfPathFromStartToFinishPosition() {
-		assertEquals(6, sol.getSolution().size());
+		assertEquals(7, sol.getSolution().size());
 	}
 
 	/**

@@ -23,36 +23,25 @@ public class BFSTest {
 	Searcher<Position> bfs = new BFS<Position>();
 	Solution<Position> sol = bfs.search(mazeSearchable);
 
-	/**
-	 * shouldReturnCountOfPathFromStartToFinishPosition the way from the start
-	 * position to the end is 5 we check if it is 5 by the assertEquals
-	 */
+
 	@Test
 	public void shouldReturnCountOfPathFromStartToFinishPosition() {
 		assertEquals(7, sol.getSolution().size());
 	}
 
-	/**
-	 * shouldReturnTheGoalStateOfTheMaze check if the goal state is the same
-	 * with the assertEquals
-	 */
+
 	@Test
 	public void shouldReturnTheGoalStateOfTheMaze() {
 		assertEquals(goalPos, sol.getSolution().get(sol.getSolution().size() - 1).getCost());
 	}
 
-	/**
-	 * shouldReturnTheStartStateOfTheMaze check if the start state is the same
-	 * with the assertEquals
-	 */
+
 	@Test
 	public void shouldReturnTheStartStateOfTheMaze() {
 		assertEquals(startPos, sol.getSolution().get(0).getCost());
 	}
 
-	/**
-	 * checkIfTheEvaluatedNumberOfNodesOfTheSolutionIsValid
-	 */
+
 	@Test
 	public void checkIfTheEvaluatedNumberOfNodesOfTheSolutionIsValid() {
 		assertEquals(true, bfs.getEvaluatedNodesNun() >= sol.getSolution().size());

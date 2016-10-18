@@ -34,6 +34,14 @@ public class MazeAdapter implements Searchable<Position> {
 		
 	}
 	
+	public MazeAdapter(Maze3d mazeObj, Position startpos){
+		this.maze = mazeObj;
+		this.startState = this.adaptToState(startpos);
+		this.goalState = this.adaptToState(maze.getGoalPos());
+		startState.setCost(0);
+		
+	}
+	
 	/* (non-Javadoc)
 	 * @see algorithms.search.Searchable#getStartState()
 	 */
